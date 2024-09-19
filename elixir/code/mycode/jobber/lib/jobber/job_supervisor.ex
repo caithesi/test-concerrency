@@ -12,7 +12,7 @@ defmodule Jobber.JobSupervisor do
 
     options = [
       strategy: :one_for_one,
-      max_second: 30
+      max_seconds: 30
     ]
 
     Supervisor.init(children, options)

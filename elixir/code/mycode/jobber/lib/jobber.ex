@@ -1,8 +1,9 @@
 defmodule Jobber do
-  alias Jobber.{JobRunner, Job}
+  alias Jobber.{JobRunner, JobSupervisor, Job}
 
   def start_job(args) do
-    DynamicSupervisor.start_child(JobRunner, {Job, args})
+    DynamicSupervisor.start_child(JobRunner, {JobSupervisor, args})
+    # DynamicSupervisor.start_child(JobRunner, {Job, args})
   end
 
   @moduledoc """
