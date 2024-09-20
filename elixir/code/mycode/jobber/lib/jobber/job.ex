@@ -61,7 +61,7 @@ defmodule Jobber.Job do
       if Keyword.has_key?(args, :id) do
         args
       else
-        Keyword.put(args, :id, random_job_id)
+        Keyword.put(args, :id, random_job_id())
       end
 
     id = Keyword.get(args, :id)
