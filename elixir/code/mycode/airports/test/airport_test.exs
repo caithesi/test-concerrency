@@ -1,8 +1,8 @@
-defmodule AirportTest do
+defmodule AirportsTest do
   use ExUnit.Case
-  doctest Airport
+  doctest Airports
 
   test "greets the world" do
-    assert Airport.hello() == :world
+    assert Airports.hello() == :world
   end
 end

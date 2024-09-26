@@ -1,4 +1,4 @@
-defmodule Airport.MixProject do
+defmodule Airports.MixProject do
   use Mix.Project
 
   def project do
