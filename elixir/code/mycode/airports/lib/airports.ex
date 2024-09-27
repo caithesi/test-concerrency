@@ -30,9 +30,11 @@ defmodule Airports do
     end)
     |> Flow.reject(filter)
     |> Flow.partition(key: {:key, :country})
+    # |> Flow.group_by(& &1.country, &Enum.count/1)
     |> Flow.reduce(fn -> %{} end, fn item, acc ->
       Map.update(acc, item.country, 1, &(&1 + 1))
     end)
+    # |> Flow.map(fn {country, data} -> {country, Enum.count(data)} end)
     |> Enum.to_list()
   end
 
@@ -45,8 +47,8 @@ defmodule Airports do
     }
   end
 
-  def open_airports(read_fn) do
+  def open_airports() do
     (&airports_csv/0)
-    |> read_fn.(&(&1.type == "closed"))
+    |> read_airport_use_flow(&(&1.type == "closed"))
   end
 end
