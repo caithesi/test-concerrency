@@ -30,11 +30,13 @@ defmodule Airports do
     end)
     |> Flow.reject(filter)
     |> Flow.partition(key: {:key, :country})
-    # |> Flow.group_by(& &1.country, &Enum.count/1)
+    # |> Flow.group_by(& &1.country)
+    # |> Flow.map(fn {country, data} -> {country, Enum.count(data)} end)
     |> Flow.reduce(fn -> %{} end, fn item, acc ->
       Map.update(acc, item.country, 1, &(&1 + 1))
     end)
-    # |> Flow.map(fn {country, data} -> {country, Enum.count(data)} end)
+    |> Flow.take_sort(10, fn {_, a}, {_, b} -> a > b end)
+    |> Flow.flat_map(fn x -> x end)
     |> Enum.to_list()
   end
 
