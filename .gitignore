@@ -1,0 +1,11 @@
+# Logs and temporary files
+/log/
+*~
+*.log
+*.tmp
+
+
+# IDE specific files
+.idea/
+.vscode/
+*.iml

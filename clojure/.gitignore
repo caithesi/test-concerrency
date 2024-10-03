@@ -1,0 +1,40 @@
+# Compiled class files
+*.class
+
+# Clojure REPL temporary files
+repl-history
+.lein-repl-history
+.lein-failures
+
+# Leiningen specific files
+/.lein-deps-sum
+/.lein-repl-port
+/target/
+.checkouts/
+
+# Maven specific files (if you're using it)
+/pom.xml.tag
+/pom.xml.releaseBackup
+/pom.xml.versionsBackup
+/log/
+*~ 
+
+# NRepl
+.nrepl-port
+
+# Logs and temporary files
+*.log
+*.tmp
+*.swp
+.DS_Store
+
+# IntelliJ IDEA and Eclipse specific
+.idea/
+.project
+.classpath
+*.iml
+
+# Cider Emacs specific
+/.nrepl-port
+.cpcache/
+.ensime_cache/
