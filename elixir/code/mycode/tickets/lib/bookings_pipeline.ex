@@ -20,6 +20,9 @@ defmodule BookingsPipeline do
       ],
       processors: [
         default: []
+      ],
+      batchers: [
+        default: []
       ]
     ]
 
@@ -33,7 +36,8 @@ defmodule BookingsPipeline do
     if Tickets.tickets_available?(event) do
       Tickets.create_ticket(user, event)
       Tickets.send_email(user)
-      IO.inspect(message, label: "Message")
+      # IO.inspect(message, label: "Message")
+      message
     else
       Broadway.Message.failed(message, "bookings-closed")
     end
@@ -51,9 +55,14 @@ defmodule BookingsPipeline do
     end)
   end
 
+  def handle_batch(_batcher, messages, batch_info, _context) do
+    IO.inspect(batch_info, label: "#{inspect(self())}  Batch")
+    messages
+  end
+
   def prepare_messages(messages, _context) do
     #  Parse data and convert to a map.
-    IO.inspect(messages, label: "Message")
+    # IO.inspect(messages, label: "Message")
 
     t = fn message ->
       Broadway.Message.update_data(message, fn data ->
