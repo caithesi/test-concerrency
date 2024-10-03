@@ -28,7 +28,8 @@ defmodule Tickets.MixProject do
       {:broadway, "~> 1.1.0"},
       {:broadway_rabbitmq, "~> 0.7.0"},
       {:rabbit_common, "~> 3.13.4", override: true},
-      {:lager, "~> 3.2"}
+      {:lager, "~> 3.2"},
+      {:amqp, "~> 3.3"}
     ]
   end
 end
