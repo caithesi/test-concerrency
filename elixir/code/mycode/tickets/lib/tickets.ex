@@ -35,7 +35,7 @@ defmodule Tickets do
   end
 
   @users [
-    %{id: "1", email: " foo@email.com"},
+    %{id: "1", email: "foo@email.com"},
     %{id: "2", email: "bar@email.com"},
     %{id: "3", email: "baz@email.com"}
   ]

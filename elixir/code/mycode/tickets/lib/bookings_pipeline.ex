@@ -33,7 +33,7 @@ defmodule BookingsPipeline do
   end
 
   def handle_message(_processor, message, _context) do
-    %{data: %{event: event, user: user}} = message
+    %{data: %{event: event}} = message
 
     # TODO: check for tickets availability.
     if Tickets.tickets_available?(event) do
@@ -61,13 +61,22 @@ defmodule BookingsPipeline do
   end
 
   def handle_batch(_batcher, messages, batch_info, _context) do
-    IO.puts("#{inspect(self())} Batch #{batch_info.batcher} #{batch_info.batch_key} total message is #{Enum.count(messages)}")
+    IO.puts(
+      "#{inspect(self())} Batch #{batch_info.batcher} #{batch_info.batch_key} total message is #{Enum.count(messages)}"
+    )
+
     # IO.inspect(batch_info, label: "#{inspect(self())}  Batch")
     messages
     |> Tickets.insert_all_tickets()
-    |> Enum.each(fn %{data: %{user: user}} -> Tickets.send_email(user) end)
+    |> Enum.each(&send_notify_after_insert/1)
 
     messages
+  end
+
+  def send_notify_after_insert(message) do
+    channel = message.metadata.amqp_channel
+    payload = "email,#{message.data.user.email}"
+    AMQP.Basic.publish(channel, "", "notifications_queue", payload)
   end
 
   def prepare_messages(messages, _context) do
